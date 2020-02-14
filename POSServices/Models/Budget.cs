@@ -13,4 +13,9 @@ namespace POSServices.Models
         public string JournalNumber { get; set; }
         public DateTime? TransactionDate { get; set; }
     }
+
+    public class BudgetList
+    {
+        public List<Budget> Budgets { get; set; }
+    }
 }

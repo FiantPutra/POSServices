@@ -11,4 +11,10 @@ namespace POSServices.Models
         public string CustomerId { get; set; }
         public string Currency { get; set; }
     }
+
+    public class ListPrice
+    {
+        public List<PriceList> prices { get; set; }
+    }
+
 }
