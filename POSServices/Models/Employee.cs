@@ -19,6 +19,7 @@ namespace POSServices.Models
         public DateTime? LastUpdateDate { get; set; }
         public int PossitionId { get; set; }
         public string EmployeeCode { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
 
         public virtual EmployeePossition Possition { get; set; }
         public virtual Store Store { get; set; }

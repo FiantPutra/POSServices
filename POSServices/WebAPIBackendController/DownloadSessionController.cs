@@ -22,17 +22,19 @@ namespace POSServices.WebAPIBackendController
         }
 
         [HttpGet]
-        public async Task<IActionResult> getDownloadSession()
+        public async Task<IActionResult> getDownloadSession(int JobId)
         {
             try
             {
-                var downloadSession = (from ds in _context.JobTabletoSynchDetailDownload
+                var downloadSession = (from ds in _context.JobTabletoSynchDetailDownload.Where(x => x.JobId == JobId)
                                        select new
                                        {
+                                           SyncDetail = ds.SynchDetail,
                                            Store = ds.StoreId,
                                            TableName = ds.TableName,
                                            SyncDate = ds.Synchdate,
-                                           rowFatch = ds.RowFatch
+                                           rowFatch = ds.RowFatch,
+                                           JobId = ds.JobId
                                        }).ToList();
 
                 return Json(new[] { downloadSession });
@@ -48,15 +50,17 @@ namespace POSServices.WebAPIBackendController
         }
 
         [HttpGet("Status")]
-        public async Task<IActionResult> getDownloadSessionStatus()
+        public async Task<IActionResult> getDownloadSessionStatus(int JobId)
         {
             try
             {
                 var downloadSessionStatus = (from ds in _context.JobTabletoSynchDetailDownload
                                              join dst in _context.JobSynchDetailDownloadStatus
                                              on ds.SynchDetail equals dst.SynchDetail
+                                             where ds.JobId == JobId
                                              select new
                                              {
+                                                 SyncDetail = ds.SynchDetail,
                                                  Store = ds.StoreId,
                                                  TableName = ds.TableName,
                                                  SyncDate = ds.Synchdate,

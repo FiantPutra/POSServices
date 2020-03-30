@@ -9,6 +9,7 @@ namespace POSServices.Models
         public string WarehouseId { get; set; }
         public int ItemId { get; set; }
         public int? Qty { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
 
         public virtual Item Item { get; set; }
         public virtual Warehouse Warehouse { get; set; }

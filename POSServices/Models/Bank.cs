@@ -14,6 +14,7 @@ namespace POSServices.Models
         public string BankId { get; set; }
         public string Name { get; set; }
         public string Account { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
 
         public virtual ICollection<StorePaymentMethod> StorePaymentMethod { get; set; }
     }

@@ -42,18 +42,11 @@ namespace POSServices.Controllers
                  select new Article
                  {
                      id = item.Id,
-                     price = price.SalesPrice,
-                     gender = item.Gender,
+                     price = price.SalesPrice,                     
                      articleId = item.ItemId,
                      articleIdAlias = item.ItemIdAlias,
-                     articleName = item.Name,
-                     brand = item.Brand,
-                     color = item.Color,
-                     department = item.Department,
-                     departmentType = item.DepartmentType,
-                     size = item.Size,
-                     itemGroup = item.ItemGroup,
-                     itemGroupDesc = item.ItemGroupDesc,
+                     articleName = item.Name,                     
+                     itemGroup = item.ItemGroup,                     
                      unit = "PCS",
                      isService = item.IsServiceItem.HasValue ? item.IsServiceItem.Value : false
 
@@ -94,15 +87,7 @@ namespace POSServices.Controllers
                                     }
                                     article.articleId = item.ItemId;
                                     article.articleIdAlias = item.ItemIdAlias;
-                                    article.articleName = item.Name;
-                                    article.brand = item.Brand;
-                                    article.color = item.Color;
-                                    article.gender = item.Gender;
-                                    article.department = item.Department;
-                                    article.itemGroup = item.ItemGroup;
-                                    article.itemGroupDesc = item.ItemGroupDesc;
-                                    article.departmentType = item.DepartmentType;
-                                    article.size = item.Size;
+                                    article.articleName = item.Name;                                    
                                     article.unit = "PCS";
                                     allArticle.Add(article);
 

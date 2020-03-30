@@ -51,7 +51,7 @@ namespace POSServices.WebAPIBackendController
                          TransactionDate = deliver.TransactionDate
                      }).ToList();
 
-                return Json(new[] { budget });
+                return Json(budget);
             }
             catch (Exception ex)
             {
@@ -63,7 +63,7 @@ namespace POSServices.WebAPIBackendController
             }            
         }
 
-        [HttpPost("Add")]
+        [HttpPost("Create")]
         public async Task<IActionResult> create(BudgetList budgetList)
         {
             try
@@ -101,7 +101,7 @@ namespace POSServices.WebAPIBackendController
             }
         }
 
-        [HttpPost("Edit")]
+        [HttpPost("Update")]
         public async Task<IActionResult> update(BudgetList budgetList)
         {
             try

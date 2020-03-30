@@ -10,11 +10,11 @@ namespace POSServices.Models
         public decimal SalesPrice { get; set; }
         public string CustomerId { get; set; }
         public string Currency { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
     }
 
     public class ListPrice
     {
         public List<PriceList> prices { get; set; }
     }
-
 }

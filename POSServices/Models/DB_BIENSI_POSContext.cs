@@ -15,7 +15,6 @@ namespace POSServices.Models
         {
         }
 
-        public virtual DbSet<AggregatedCounter> AggregatedCounter { get; set; }
         public virtual DbSet<ApplicationVersion> ApplicationVersion { get; set; }
         public virtual DbSet<AssHeadSecurityMatrix> AssHeadSecurityMatrix { get; set; }
         public virtual DbSet<Bank> Bank { get; set; }
@@ -24,7 +23,6 @@ namespace POSServices.Models
         public virtual DbSet<CashierShift> CashierShift { get; set; }
         public virtual DbSet<ClosingStore> ClosingStore { get; set; }
         public virtual DbSet<CostCategory> CostCategory { get; set; }
-        public virtual DbSet<Counter> Counter { get; set; }
         public virtual DbSet<Currency> Currency { get; set; }
         public virtual DbSet<CurrencyDenomination> CurrencyDenomination { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
@@ -45,9 +43,7 @@ namespace POSServices.Models
         public virtual DbSet<EmployeeTarget> EmployeeTarget { get; set; }
         public virtual DbSet<Expense> Expense { get; set; }
         public virtual DbSet<ExpenseStore> ExpenseStore { get; set; }
-        public virtual DbSet<Hash> Hash { get; set; }
         public virtual DbSet<HotransactionType> HotransactionType { get; set; }
-        public virtual DbSet<IntegrationLog> IntegrationLog { get; set; }
         public virtual DbSet<InventoryLines> InventoryLines { get; set; }
         public virtual DbSet<InventoryTransaction> InventoryTransaction { get; set; }
         public virtual DbSet<InventoryTransactionLines> InventoryTransactionLines { get; set; }
@@ -59,21 +55,13 @@ namespace POSServices.Models
         public virtual DbSet<ItemDimensionGender> ItemDimensionGender { get; set; }
         public virtual DbSet<ItemDimensionSize> ItemDimensionSize { get; set; }
         public virtual DbSet<ItemGroup> ItemGroup { get; set; }
-        public virtual DbSet<Job> Job { get; set; }
-        public virtual DbSet<JobParameter> JobParameter { get; set; }
-        public virtual DbSet<JobQueue> JobQueue { get; set; }
-        public virtual DbSet<List> List { get; set; }
         public virtual DbSet<LogRecord> LogRecord { get; set; }
         public virtual DbSet<Login> Login { get; set; }
         public virtual DbSet<LoginStore> LoginStore { get; set; }
         public virtual DbSet<LoginWeb> LoginWeb { get; set; }
         public virtual DbSet<MutasiApproverMatrix> MutasiApproverMatrix { get; set; }
         public virtual DbSet<PriceList> PriceList { get; set; }
-        public virtual DbSet<Schema> Schema { get; set; }
         public virtual DbSet<SequenceNumberLog> SequenceNumberLog { get; set; }
-        public virtual DbSet<Server> Server { get; set; }
-        public virtual DbSet<Set> Set { get; set; }
-        public virtual DbSet<State> State { get; set; }
         public virtual DbSet<StockTake> StockTake { get; set; }
         public virtual DbSet<StockTakeLine> StockTakeLine { get; set; }
         public virtual DbSet<Store> Store { get; set; }
@@ -82,27 +70,21 @@ namespace POSServices.Models
         public virtual DbSet<StorePaymentMethod> StorePaymentMethod { get; set; }
         public virtual DbSet<StoreTarget> StoreTarget { get; set; }
         public virtual DbSet<StoreType> StoreType { get; set; }
-        public virtual DbSet<Table> Table { get; set; }
         public virtual DbSet<TempDofixing> TempDofixing { get; set; }
-        public virtual DbSet<TempTransaction> TempTransaction { get; set; }
-        public virtual DbSet<TempTransactionLines> TempTransactionLines { get; set; }
         public virtual DbSet<Transaction> Transaction { get; set; }
-        public virtual DbSet<TransactionByPass> TransactionByPass { get; set; }
-        public virtual DbSet<TransactionCopy> TransactionCopy { get; set; }
+        public virtual DbSet<TransactionByPassx> TransactionByPassx { get; set; }
+        public virtual DbSet<TransactionCopyx> TransactionCopyx { get; set; }
         public virtual DbSet<TransactionLines> TransactionLines { get; set; }
         public virtual DbSet<UserLogin> UserLogin { get; set; }
         public virtual DbSet<Voucher> Voucher { get; set; }
         public virtual DbSet<Warehouse> Warehouse { get; set; }
 
-        // Unable to generate entity type for table 'dbo.stagingtable'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.DATA'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.CUOR_ITRN_MISS'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.CUNO'. Please see the warning messages.
-        // Unable to generate entity type for table 'dbo.Bersih'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.Department'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.DiscountAPI'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.DiscountItemAPI'. Please see the warning messages.
-        // Unable to generate entity type for table 'dbo.Price'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.rpt_vInventoryLines'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.rpt_Security'. Please see the warning messages.
 
@@ -111,28 +93,13 @@ namespace POSServices.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=SERVER-VSU;Database=DB_BIENSI_POS;Trusted_Connection=True");
+                optionsBuilder.UseSqlServer("Server=Server-VSU;Database=DB_BIENSI_POS;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
-
-            modelBuilder.Entity<AggregatedCounter>(entity =>
-            {
-                entity.ToTable("AggregatedCounter", "HangFire");
-
-                entity.HasIndex(e => new { e.Value, e.Key })
-                    .HasName("UX_HangFire_CounterAggregated_Key")
-                    .IsUnique();
-
-                entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(100);
-            });
 
             modelBuilder.Entity<ApplicationVersion>(entity =>
             {
@@ -185,6 +152,8 @@ namespace POSServices.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ModifiedDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -348,20 +317,6 @@ namespace POSServices.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Counter>(entity =>
-            {
-                entity.ToTable("Counter", "HangFire");
-
-                entity.HasIndex(e => new { e.Value, e.Key })
-                    .HasName("IX_HangFire_Counter_Key");
-
-                entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(100);
-            });
-
             modelBuilder.Entity<Currency>(entity =>
             {
                 entity.Property(e => e.Code)
@@ -373,10 +328,18 @@ namespace POSServices.Models
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<CurrencyDenomination>(entity =>
             {
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.Nominal).HasColumnType("money");
             });
 
@@ -411,6 +374,10 @@ namespace POSServices.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255)
@@ -438,6 +405,10 @@ namespace POSServices.Models
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<DeviceTable>(entity =>
@@ -594,6 +565,8 @@ namespace POSServices.Models
 
                 entity.Property(e => e.AmountMin).HasColumnType("money");
 
+                entity.Property(e => e.ApplytoAllstore).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.ApprovedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -609,43 +582,32 @@ namespace POSServices.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.DiscountPartner)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<DiscountSetupLines>(entity =>
             {
-                entity.Property(e => e.AmountMax)
-                    .HasColumnType("money")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AmountMax).HasColumnType("money");
 
-                entity.Property(e => e.AmountMin)
-                    .HasColumnType("money")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AmountMin).HasColumnType("money");
 
                 entity.Property(e => e.Code)
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
                 entity.Property(e => e.DiscountCash).HasColumnType("money");
-
-                entity.Property(e => e.DiscountCode)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.DiscountPrecentage).HasColumnType("decimal(18, 0)");
 
-                entity.Property(e => e.QtyMax).HasDefaultValueSql("((0))");
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
 
-                entity.Property(e => e.QtyMin).HasDefaultValueSql("((0))");
+                entity.Property(e => e.ModifiedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.DiscountSetup)
                     .WithMany(p => p.DiscountSetupLines)
@@ -655,6 +617,10 @@ namespace POSServices.Models
 
             modelBuilder.Entity<DiscountSetupStore>(entity =>
             {
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.DiscountSetupStore)
                     .HasForeignKey(d => d.StoreId)
@@ -723,6 +689,8 @@ namespace POSServices.Models
 
                 entity.Property(e => e.LastUpdateDate).HasColumnType("date");
 
+                entity.Property(e => e.ModifiedDatetime).HasColumnType("datetime");
+
                 entity.HasOne(d => d.Possition)
                     .WithMany(p => p.Employee)
                     .HasForeignKey(d => d.PossitionId)
@@ -739,6 +707,8 @@ namespace POSServices.Models
             modelBuilder.Entity<EmployeePossition>(entity =>
             {
                 entity.Property(e => e.CanConfirmDo).HasColumnName("CanConfirmDO");
+
+                entity.Property(e => e.ModifiedDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -819,29 +789,6 @@ namespace POSServices.Models
                 entity.Property(e => e.TotalExpense).HasColumnType("money");
             });
 
-            modelBuilder.Entity<Hash>(entity =>
-            {
-                entity.ToTable("Hash", "HangFire");
-
-                entity.HasIndex(e => new { e.ExpireAt, e.Key })
-                    .HasName("IX_HangFire_Hash_Key");
-
-                entity.HasIndex(e => new { e.Id, e.ExpireAt })
-                    .HasName("IX_HangFire_Hash_ExpireAt");
-
-                entity.HasIndex(e => new { e.Key, e.Field })
-                    .HasName("UX_HangFire_Hash_Key_Field")
-                    .IsUnique();
-
-                entity.Property(e => e.Field)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(100);
-            });
-
             modelBuilder.Entity<HotransactionType>(entity =>
             {
                 entity.ToTable("HOTransactionType");
@@ -865,36 +812,10 @@ namespace POSServices.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<IntegrationLog>(entity =>
-            {
-                entity.Property(e => e.Description)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ErrorMessage)
-                    .HasColumnName("errorMessage")
-                    .HasMaxLength(5000)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Json).IsUnicode(false);
-
-                entity.Property(e => e.NrOfFailedTransactions).HasColumnName("nrOfFailedTransactions");
-
-                entity.Property(e => e.NrOfSuccessfullTransactions).HasColumnName("nrOfSuccessfullTransactions");
-
-                entity.Property(e => e.NumOfLineSubmited).HasColumnName("numOfLineSubmited");
-
-                entity.Property(e => e.RefNumber)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TransactionType)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-            });
-
             modelBuilder.Entity<InventoryLines>(entity =>
             {
+                entity.Property(e => e.ModifiedDatetime).HasColumnType("datetime");
+
                 entity.Property(e => e.WarehouseId)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -1036,43 +957,26 @@ namespace POSServices.Models
                 entity.HasIndex(e => e.ItemId)
                     .HasName("NonClusteredIndex-20200121-094316");
 
-                entity.Property(e => e.Brand)
-                    .IsRequired()
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
+                entity.Property(e => e.BrandId).HasColumnName("Brand_id");
 
-                entity.Property(e => e.Color)
-                    .IsRequired()
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
+                entity.Property(e => e.ColorId).HasColumnName("Color_id");
 
                 entity.Property(e => e.CreateDateTime)
                     .HasColumnType("datetime")
-                    .HasDefaultValueSql("(sysdatetime())");
+                    .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.Department)
-                    .IsRequired()
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
+                entity.Property(e => e.DepartmentId).HasColumnName("Department_id");
 
-                entity.Property(e => e.DepartmentType)
-                    .IsRequired()
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
+                entity.Property(e => e.DepartmentTypeId).HasColumnName("DepartmentType_id");
 
-                entity.Property(e => e.Gender)
-                    .IsRequired()
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
+                entity.Property(e => e.GenderId).HasColumnName("Gender_id");
 
-                entity.Property(e => e.IsServiceItem).HasColumnName("isServiceItem");
+                entity.Property(e => e.IsServiceItem)
+                    .HasColumnName("isServiceItem")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.ItemGroup)
                     .HasMaxLength(1000)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ItemGroupDesc)
-                    .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ItemId)
@@ -1085,19 +989,14 @@ namespace POSServices.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ModifiedDatetime)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.ModifiedDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(1000)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Size)
-                    .IsRequired()
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
+                entity.Property(e => e.SizeId).HasColumnName("Size_id");
             });
 
             modelBuilder.Entity<ItemDimensionBrand>(entity =>
@@ -1111,6 +1010,10 @@ namespace POSServices.Models
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<ItemDimensionColor>(entity =>
@@ -1124,6 +1027,10 @@ namespace POSServices.Models
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<ItemDimensionDepartment>(entity =>
@@ -1137,6 +1044,10 @@ namespace POSServices.Models
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<ItemDimensionDepartmentType>(entity =>
@@ -1150,6 +1061,10 @@ namespace POSServices.Models
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<ItemDimensionGender>(entity =>
@@ -1163,6 +1078,10 @@ namespace POSServices.Models
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<ItemDimensionSize>(entity =>
@@ -1176,6 +1095,10 @@ namespace POSServices.Models
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<ItemGroup>(entity =>
@@ -1189,77 +1112,6 @@ namespace POSServices.Models
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<Job>(entity =>
-            {
-                entity.ToTable("Job", "HangFire");
-
-                entity.HasIndex(e => e.StateName)
-                    .HasName("IX_HangFire_Job_StateName");
-
-                entity.HasIndex(e => new { e.Id, e.ExpireAt })
-                    .HasName("IX_HangFire_Job_ExpireAt");
-
-                entity.Property(e => e.Arguments).IsRequired();
-
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
-
-                entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-
-                entity.Property(e => e.InvocationData).IsRequired();
-
-                entity.Property(e => e.StateName).HasMaxLength(20);
-            });
-
-            modelBuilder.Entity<JobParameter>(entity =>
-            {
-                entity.ToTable("JobParameter", "HangFire");
-
-                entity.HasIndex(e => new { e.JobId, e.Name })
-                    .HasName("IX_HangFire_JobParameter_JobIdAndName");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(40);
-
-                entity.HasOne(d => d.Job)
-                    .WithMany(p => p.JobParameter)
-                    .HasForeignKey(d => d.JobId)
-                    .HasConstraintName("FK_HangFire_JobParameter_Job");
-            });
-
-            modelBuilder.Entity<JobQueue>(entity =>
-            {
-                entity.ToTable("JobQueue", "HangFire");
-
-                entity.HasIndex(e => new { e.Queue, e.FetchedAt })
-                    .HasName("IX_HangFire_JobQueue_QueueAndFetchedAt");
-
-                entity.Property(e => e.FetchedAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Queue)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<List>(entity =>
-            {
-                entity.ToTable("List", "HangFire");
-
-                entity.HasIndex(e => new { e.Id, e.ExpireAt })
-                    .HasName("IX_HangFire_List_ExpireAt");
-
-                entity.HasIndex(e => new { e.ExpireAt, e.Value, e.Key })
-                    .HasName("IX_HangFire_List_Key");
-
-                entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Value).HasColumnType("nvarchar(max)");
             });
 
             modelBuilder.Entity<LogRecord>(entity =>
@@ -1359,17 +1211,11 @@ namespace POSServices.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.SalesPrice).HasColumnType("money");
-            });
-
-            modelBuilder.Entity<Schema>(entity =>
-            {
-                entity.HasKey(e => e.Version)
-                    .HasName("PK_HangFire_Schema");
-
-                entity.ToTable("Schema", "HangFire");
-
-                entity.Property(e => e.Version).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<SequenceNumberLog>(entity =>
@@ -1383,63 +1229,6 @@ namespace POSServices.Models
                 entity.Property(e => e.StoreCode).HasMaxLength(50);
 
                 entity.Property(e => e.TransactionType).HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<Server>(entity =>
-            {
-                entity.ToTable("Server", "HangFire");
-
-                entity.Property(e => e.Id)
-                    .HasMaxLength(100)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.LastHeartbeat).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<Set>(entity =>
-            {
-                entity.ToTable("Set", "HangFire");
-
-                entity.HasIndex(e => new { e.Id, e.ExpireAt })
-                    .HasName("IX_HangFire_Set_ExpireAt");
-
-                entity.HasIndex(e => new { e.Key, e.Value })
-                    .HasName("UX_HangFire_Set_KeyAndValue")
-                    .IsUnique();
-
-                entity.HasIndex(e => new { e.ExpireAt, e.Value, e.Key })
-                    .HasName("IX_HangFire_Set_Key");
-
-                entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(256);
-            });
-
-            modelBuilder.Entity<State>(entity =>
-            {
-                entity.ToTable("State", "HangFire");
-
-                entity.HasIndex(e => e.JobId)
-                    .HasName("IX_HangFire_State_JobId");
-
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.Reason).HasMaxLength(100);
-
-                entity.HasOne(d => d.Job)
-                    .WithMany(p => p.State)
-                    .HasForeignKey(d => d.JobId)
-                    .HasConstraintName("FK_HangFire_State_Job");
             });
 
             modelBuilder.Entity<StockTake>(entity =>
@@ -1510,6 +1299,10 @@ namespace POSServices.Models
 
                 entity.Property(e => e.MobileStore).HasDefaultValueSql("((1))");
 
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255)
@@ -1526,11 +1319,6 @@ namespace POSServices.Models
                 entity.Property(e => e.WarehouseId)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.HasOne(d => d.StoreType)
-                    .WithMany(p => p.Store)
-                    .HasForeignKey(d => d.StoreTypeId)
-                    .HasConstraintName("FK_Store_ToStoreType");
             });
 
             modelBuilder.Entity<StoreDiscount>(entity =>
@@ -1558,18 +1346,39 @@ namespace POSServices.Models
 
             modelBuilder.Entity<StorePaymentMethod>(entity =>
             {
+                entity.HasIndex(e => e.Detailid)
+                    .HasName("IX_StorePaymentMethod");
+
                 entity.Property(e => e.BankCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Detailid)
+                    .IsRequired()
+                    .HasColumnName("detailid")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.BankCodeNavigation)
                     .WithMany(p => p.StorePaymentMethod)
                     .HasForeignKey(d => d.BankCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_StorePaymentMethod_ToBank");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.StorePaymentMethod)
                     .HasForeignKey(d => d.StoreId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_StorePaymentMethod_ToStore");
             });
 
@@ -1616,11 +1425,6 @@ namespace POSServices.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Table>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-            });
-
             modelBuilder.Entity<TempDofixing>(entity =>
             {
                 entity.HasKey(e => e.Oqdlix);
@@ -1632,126 +1436,6 @@ namespace POSServices.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<TempTransaction>(entity =>
-            {
-                entity.HasIndex(e => e.TransactionId)
-                    .HasName("NonClusteredIndex-20200121-095847");
-
-                entity.Property(e => e.Bank1)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Bank2)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Cash).HasColumnType("money");
-
-                entity.Property(e => e.Change).HasColumnType("money");
-
-                entity.Property(e => e.ClosingShiftId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ClosingStoreId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Currency).HasMaxLength(10);
-
-                entity.Property(e => e.CustomerIdStore)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Edc1).HasColumnType("money");
-
-                entity.Property(e => e.Edc2).HasColumnType("money");
-
-                entity.Property(e => e.NoRef1)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NoRef2)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.OpenShiftId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.OpenStoreId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RecieptCode)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.SequenceNumber)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Spgid).HasColumnName("SPGId");
-
-                entity.Property(e => e.StoreCode)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TotalAmounTransaction)
-                    .HasColumnType("money")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.TotalDiscount)
-                    .HasColumnType("money")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.TransactionDate).HasColumnType("datetime");
-
-                entity.Property(e => e.TransactionId)
-                    .HasColumnName("TransactionID")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<TempTransactionLines>(entity =>
-            {
-                entity.HasIndex(e => e.TransactionId)
-                    .HasName("NonClusteredIndex-20200121-095307");
-
-                entity.Property(e => e.Amount).HasColumnType("money");
-
-                entity.Property(e => e.ArticleId)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Department)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DepartmentType)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Discount).HasColumnType("money");
-
-                entity.Property(e => e.DiscountCode)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Spgid)
-                    .HasColumnName("SPGID")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TransactionId)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UnitPrice).HasColumnType("money");
             });
 
             modelBuilder.Entity<Transaction>(entity =>
@@ -1866,7 +1550,7 @@ namespace POSServices.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TransactionByPass>(entity =>
+            modelBuilder.Entity<TransactionByPassx>(entity =>
             {
                 entity.Property(e => e.TransactionId)
                     .HasColumnName("TransactionID")
@@ -1874,7 +1558,7 @@ namespace POSServices.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TransactionCopy>(entity =>
+            modelBuilder.Entity<TransactionCopyx>(entity =>
             {
                 entity.HasIndex(e => new { e.Id, e.TransactionId, e.StoreCode, e.EmployeeCode })
                     .HasName("t1");
@@ -2015,6 +1699,8 @@ namespace POSServices.Models
 
                 entity.Property(e => e.LastLogin).HasColumnType("datetime");
 
+                entity.Property(e => e.ModifiedDatetime).HasColumnType("datetime");
+
                 entity.Property(e => e.NewPassword).HasMaxLength(50);
 
                 entity.Property(e => e.OldPassword).HasMaxLength(50);
@@ -2078,6 +1764,10 @@ namespace POSServices.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ModifiedDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(255)

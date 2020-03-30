@@ -7,32 +7,32 @@ namespace POSServices.Models
     {
         public int Id { get; set; }
         public int DiscountRetailId { get; set; }
-        public int ArticleId { get; set; }
-        public int BrandCode { get; set; }
-        public int Gender { get; set; }
-        public int Department { get; set; }
-        public int Size { get; set; }
-        public int Color { get; set; }
+        public int? ArticleId { get; set; }
+        public int? BrandCode { get; set; }
+        public int? Gender { get; set; }
+        public int? Department { get; set; }
+        public int? Size { get; set; }
+        public int? Color { get; set; }
         public decimal? DiscountPrecentage { get; set; }
         public decimal? CashDiscount { get; set; }
         public decimal? DiscountPrice { get; set; }
         public int? Qty { get; set; }
         public decimal? AmountTransaction { get; set; }
-        public int DepartmentType { get; set; }
+        public int? DepartmentType { get; set; }
         public int ArticleIdDiscount { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public int QtyMin { get; set; }
-        public int QtyMax { get; set; }
-        public decimal AmountMin { get; set; }
-        public decimal AmountMax { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? QtyMin { get; set; }
+        public int? QtyMax { get; set; }
+        public decimal? AmountMin { get; set; }
+        public decimal? AmountMax { get; set; }
 
-        public Item Article { get; set; }
-        public Item ArticleIdDiscountNavigation { get; set; }
-        public ItemDimensionBrand BrandCodeNavigation { get; set; }
-        public ItemDimensionColor ColorNavigation { get; set; }
-        public ItemDimensionDepartment DepartmentNavigation { get; set; }
-        public ItemDimensionDepartmentType DepartmentTypeNavigation { get; set; }
-        public ItemDimensionGender GenderNavigation { get; set; }
-        public ItemDimensionSize SizeNavigation { get; set; }
+        public virtual Item Article { get; set; }
+        public virtual Item ArticleIdDiscountNavigation { get; set; }
+        public virtual ItemDimensionBrand BrandCodeNavigation { get; set; }
+        public virtual ItemDimensionColor ColorNavigation { get; set; }
+        public virtual ItemDimensionDepartment DepartmentNavigation { get; set; }
+        public virtual ItemDimensionDepartmentType DepartmentTypeNavigation { get; set; }
+        public virtual ItemDimensionGender GenderNavigation { get; set; }
+        public virtual ItemDimensionSize SizeNavigation { get; set; }
     }
 }

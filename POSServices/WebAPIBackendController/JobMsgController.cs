@@ -21,6 +21,36 @@ namespace POSServices.WebAPIBackendController
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> getJobList(int erpJob)
+        {
+            try
+            {
+                var jobList = (from job in _context.Job.Where(x => x.Erpjob == erpJob)
+                               select new
+                               {
+                                   Description = job.Description,
+                                   StoreCode = job.StoreCode,
+                                   TableName = job.TableName,
+                                   SyncType = job.Synctype,
+                                   SyncDate = job.Synchdate,
+                                   LastSync = job.LastSynch,
+                                   ErpJob = job.Erpjob,
+                                   JobId = job.JobId
+                               }).ToList();
+
+                return Json(jobList);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    status = "500",
+                    message = ex.ToString()
+                });
+            }
+        }
+
         [HttpPost("Add")]
         public async Task<IActionResult> create(JobList jobList)
         {
@@ -37,6 +67,7 @@ namespace POSServices.WebAPIBackendController
                     job.LastSynch = DateTime.Now;
                     job.TableName = list[i].TableName;                     
                     job.Synctype = list[i].Synctype;
+                    job.Erpjob = list[i].Erpjob;
                     _context.Add(job);
                     _context.SaveChanges();
                 }

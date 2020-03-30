@@ -42,7 +42,7 @@ namespace POSServices.WebAPIBackendController
                                         CashierShiftId = cs.CashierShiftId
                                     }).ToList();
 
-                return Json(new[] { closingShift });
+                return Json(closingShift);
             }
             catch (Exception ex)
             {

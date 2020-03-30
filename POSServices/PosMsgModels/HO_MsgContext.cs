@@ -15,16 +15,18 @@ namespace POSServices.PosMsgModels
         {
         }
 
+        public virtual DbSet<ErptableToSynch> ErptableToSynch { get; set; }
+        public virtual DbSet<IntegrationParameter> IntegrationParameter { get; set; }
         public virtual DbSet<Job> Job { get; set; }
         public virtual DbSet<JobSynchDetailDownloadStatus> JobSynchDetailDownloadStatus { get; set; }
         public virtual DbSet<JobSynchDetailUploadStatus> JobSynchDetailUploadStatus { get; set; }
         public virtual DbSet<JobTabletoSynchDetailDownload> JobTabletoSynchDetailDownload { get; set; }
+        public virtual DbSet<JobTabletoSynchDetailErpintegration> JobTabletoSynchDetailErpintegration { get; set; }
         public virtual DbSet<JobTabletoSynchDetailUpload> JobTabletoSynchDetailUpload { get; set; }
-        public virtual DbSet<M3tableToSynch> M3tableToSynch { get; set; }
         public virtual DbSet<TableToSynch> TableToSynch { get; set; }
 
-        // Unable to generate entity type for table 'dbo.M3Staging'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.FTPServerTable'. Please see the warning messages.
+        // Unable to generate entity type for table 'dbo.ERPStaging'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.stagingtable'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -40,6 +42,49 @@ namespace POSServices.PosMsgModels
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
+            modelBuilder.Entity<ErptableToSynch>(entity =>
+            {
+                entity.ToTable("ERPTableToSynch");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.IdentityColumn)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Sqlcommand)
+                    .IsRequired()
+                    .HasColumnName("SQLCommand")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TableName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TablePrimarykey)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<IntegrationParameter>(entity =>
+            {
+                entity.HasKey(e => e.Recid);
+
+                entity.Property(e => e.Recid).HasColumnName("recid");
+
+                entity.Property(e => e.BackendPosdatabase)
+                    .HasColumnName("BackendPOSDatabase")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Erpdatabase)
+                    .HasColumnName("ERPDatabase")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Job>(entity =>
             {
                 entity.Property(e => e.JobId).HasColumnName("JobID");
@@ -49,6 +94,10 @@ namespace POSServices.PosMsgModels
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.Erpjob)
+                    .HasColumnName("ERPJob")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.LastSynch).HasColumnType("datetime");
 
@@ -130,6 +179,24 @@ namespace POSServices.PosMsgModels
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<JobTabletoSynchDetailErpintegration>(entity =>
+            {
+                entity.HasKey(e => e.SynchDetail);
+
+                entity.ToTable("JobTabletoSynchDetailERPIntegration");
+
+                entity.Property(e => e.JobId).HasColumnName("JobID");
+
+                entity.Property(e => e.Synchdate).HasColumnType("datetime");
+
+                entity.Property(e => e.TableName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TableToSynchId).HasColumnName("TableToSynchID");
+            });
+
             modelBuilder.Entity<JobTabletoSynchDetailUpload>(entity =>
             {
                 entity.HasKey(e => e.SynchDetail);
@@ -158,32 +225,6 @@ namespace POSServices.PosMsgModels
                 entity.Property(e => e.UploadPath)
                     .IsRequired()
                     .HasMaxLength(300)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<M3tableToSynch>(entity =>
-            {
-                entity.ToTable("M3TableToSynch");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.IdentityColumn)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Sqlcommand)
-                    .IsRequired()
-                    .HasColumnName("SQLCommand")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TableName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TablePrimarykey)
-                    .IsRequired()
-                    .HasMaxLength(50)
                     .IsUnicode(false);
             });
 

@@ -83,30 +83,30 @@ namespace POSServices.WebAPIInforController
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforObjPostReturn resultData = serializer.ReadObject(stream) as InforObjPostReturn;
                         //  status = "Return : " + resultData.results[0].errorMessage + "Sukses "+ resultData.nrOfSuccessfullTransactions;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = transaction.requestOrderId;
-                        try
-                        {
-                            log.ErrorMessage = resultData.results[0].errorMessage;
-                        }
-                        catch
-                        {
-                        }
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        if (log.NrOfSuccessfullTransactions > 0)
-                        {
-                            log.RefNumber = id + "";
-                        }
-                        else
-                        {
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = transaction.requestOrderId;
+                        //try
+                        //{
+                        //    log.ErrorMessage = resultData.results[0].errorMessage;
+                        //}
+                        //catch
+                        //{
+                        //}
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //if (log.NrOfSuccessfullTransactions > 0)
+                        //{
+                        //    log.RefNumber = id + "";
+                        //}
+                        //else
+                        //{
 
-                            log.RefNumber = id + "";
-                        }
-                        log.NumOfLineSubmited = listTransaction.Count;
-                        log.TransactionType = "MHS850MI";
-                        _context.IntegrationLog.Add(log);
-                        _context.SaveChanges();
+                        //    log.RefNumber = id + "";
+                        //}
+                        //log.NumOfLineSubmited = listTransaction.Count;
+                        //log.TransactionType = "MHS850MI";
+                        //_context.IntegrationLog.Add(log);
+                        //_context.SaveChanges();
                     }
                     else
                     {
@@ -194,31 +194,31 @@ namespace POSServices.WebAPIInforController
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforObjPostReturn resultData = serializer.ReadObject(stream) as InforObjPostReturn;
                         //  status = "Return : " + resultData.results[0].errorMessage + "Sukses "+ resultData.nrOfSuccessfullTransactions;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = transaction.returnOrderId;
-                        try
-                        {
-                            log.ErrorMessage = resultData.results[0].errorMessage;
-                        }
-                        catch
-                        {
-                        }
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        if (log.NrOfSuccessfullTransactions > 0)
-                        {
-                            log.RefNumber = id + "";
-                        }
-                        else
-                        {
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = transaction.returnOrderId;
+                        //try
+                        //{
+                        //    log.ErrorMessage = resultData.results[0].errorMessage;
+                        //}
+                        //catch
+                        //{
+                        //}
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //if (log.NrOfSuccessfullTransactions > 0)
+                        //{
+                        //    log.RefNumber = id + "";
+                        //}
+                        //else
+                        //{
 
-                            log.RefNumber = id + "";
-                        }
-                        log.NumOfLineSubmited = listTransaction.Count;
-                        log.TransactionType = "MHS850MI";
-                        log.Json = JsonConvert.SerializeObject(inforObj);
-                        _context.IntegrationLog.Add(log);
-                        _context.SaveChanges();
+                        //    log.RefNumber = id + "";
+                        //}
+                        //log.NumOfLineSubmited = listTransaction.Count;
+                        //log.TransactionType = "MHS850MI";
+                        //log.Json = JsonConvert.SerializeObject(inforObj);
+                        //_context.IntegrationLog.Add(log);
+                        //_context.SaveChanges();
                     }
 
                     else
@@ -309,30 +309,30 @@ namespace POSServices.WebAPIInforController
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforObjPostReturn resultData = serializer.ReadObject(stream) as InforObjPostReturn;
                         //  status = "Return : " + resultData.results[0].errorMessage + "Sukses "+ resultData.nrOfSuccessfullTransactions;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = transaction.deliveryOrderId;
-                        try
-                        {
-                            log.ErrorMessage = resultData.results[0].errorMessage;
-                        }
-                        catch
-                        {
-                        }
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        if (log.NrOfSuccessfullTransactions > 0)
-                        {
-                            log.RefNumber = id + "";
-                        }
-                        else
-                        {
-                            log.RefNumber = id + "";
-                        }
-                        log.NumOfLineSubmited = listTransaction.Count;
-                        log.TransactionType = "MHS850MI";
-                        log.Json = JsonConvert.SerializeObject(inforObj);
-                        _context.IntegrationLog.Add(log);
-                        _context.SaveChanges();
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = transaction.deliveryOrderId;
+                        //try
+                        //{
+                        //    log.ErrorMessage = resultData.results[0].errorMessage;
+                        //}
+                        //catch
+                        //{
+                        //}
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //if (log.NrOfSuccessfullTransactions > 0)
+                        //{
+                        //    log.RefNumber = id + "";
+                        //}
+                        //else
+                        //{
+                        //    log.RefNumber = id + "";
+                        //}
+                        //log.NumOfLineSubmited = listTransaction.Count;
+                        //log.TransactionType = "MHS850MI";
+                        //log.Json = JsonConvert.SerializeObject(inforObj);
+                        //_context.IntegrationLog.Add(log);
+                        //_context.SaveChanges();
                     }
 
                     else
@@ -423,30 +423,30 @@ namespace POSServices.WebAPIInforController
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforObjPostReturn resultData = serializer.ReadObject(stream) as InforObjPostReturn;
                         //  status = "Return : " + resultData.results[0].errorMessage + "Sukses "+ resultData.nrOfSuccessfullTransactions;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = transaction.deliveryOrderId;
-                        try
-                        {
-                            log.ErrorMessage = resultData.results[0].errorMessage;
-                        }
-                        catch
-                        {
-                        }
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        if (log.NrOfSuccessfullTransactions > 0)
-                        {
-                            log.RefNumber = id + "";
-                        }
-                        else
-                        {
-                            log.RefNumber = id + "";
-                        }
-                        log.NumOfLineSubmited = listTransaction.Count;
-                        log.TransactionType = "MHS850MI";
-                        log.Json = JsonConvert.SerializeObject(inforObj);
-                        _context.IntegrationLog.Add(log);
-                        _context.SaveChanges();
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = transaction.deliveryOrderId;
+                        //try
+                        //{
+                        //    log.ErrorMessage = resultData.results[0].errorMessage;
+                        //}
+                        //catch
+                        //{
+                        //}
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //if (log.NrOfSuccessfullTransactions > 0)
+                        //{
+                        //    log.RefNumber = id + "";
+                        //}
+                        //else
+                        //{
+                        //    log.RefNumber = id + "";
+                        //}
+                        //log.NumOfLineSubmited = listTransaction.Count;
+                        //log.TransactionType = "MHS850MI";
+                        //log.Json = JsonConvert.SerializeObject(inforObj);
+                        //_context.IntegrationLog.Add(log);
+                        //_context.SaveChanges();
                     }
 
                     else
@@ -524,31 +524,31 @@ namespace POSServices.WebAPIInforController
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforObjPostReturn resultData = serializer.ReadObject(stream) as InforObjPostReturn;
                         //  status = "Return : " + resultData.results[0].errorMessage + "Sukses "+ resultData.nrOfSuccessfullTransactions;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = transaction.deliveryOrderId;
-                        try
-                        {
-                            log.ErrorMessage = resultData.results[0].errorMessage;
-                        }
-                        catch
-                        {
-                        }
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        if (log.NrOfSuccessfullTransactions > 0)
-                        {
-                            log.RefNumber = transaction.deliveryOrderId + "";
-                        }
-                        else
-                        {
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = transaction.deliveryOrderId;
+                        //try
+                        //{
+                        //    log.ErrorMessage = resultData.results[0].errorMessage;
+                        //}
+                        //catch
+                        //{
+                        //}
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //if (log.NrOfSuccessfullTransactions > 0)
+                        //{
+                        //    log.RefNumber = transaction.deliveryOrderId + "";
+                        //}
+                        //else
+                        //{
 
-                            log.RefNumber = transaction.deliveryOrderId + "";
-                        }
-                        log.NumOfLineSubmited = listTransaction.Count;
-                        log.TransactionType = "MHS850MI - AddDOReceipt";
-                        log.Json = JsonConvert.SerializeObject(inforObj);
-                        _context.IntegrationLog.Add(log);
-                        _context.SaveChanges();
+                        //    log.RefNumber = transaction.deliveryOrderId + "";
+                        //}
+                        //log.NumOfLineSubmited = listTransaction.Count;
+                        //log.TransactionType = "MHS850MI - AddDOReceipt";
+                        //log.Json = JsonConvert.SerializeObject(inforObj);
+                        //_context.IntegrationLog.Add(log);
+                        //_context.SaveChanges();
                     }
 
                     else
@@ -620,31 +620,31 @@ namespace POSServices.WebAPIInforController
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforObjPostReturn resultData = serializer.ReadObject(stream) as InforObjPostReturn;
                         //  status = "Return : " + resultData.results[0].errorMessage + "Sukses "+ resultData.nrOfSuccessfullTransactions;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = transaction.deliveryOrderId;
-                        try
-                        {
-                            log.ErrorMessage = resultData.results[0].errorMessage;
-                        }
-                        catch
-                        {
-                        }
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        if (log.NrOfSuccessfullTransactions > 0)
-                        {
-                            log.RefNumber = transaction.transactionId + "";
-                        }
-                        else
-                        {
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = transaction.deliveryOrderId;
+                        //try
+                        //{
+                        //    log.ErrorMessage = resultData.results[0].errorMessage;
+                        //}
+                        //catch
+                        //{
+                        //}
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //if (log.NrOfSuccessfullTransactions > 0)
+                        //{
+                        //    log.RefNumber = transaction.transactionId + "";
+                        //}
+                        //else
+                        //{
 
-                            log.RefNumber = transaction.transactionId + "";
-                        }
-                        log.NumOfLineSubmited = listTransaction.Count;
-                        log.TransactionType = "MHS850MI - AddDOReceipt";
-                        log.Json = JsonConvert.SerializeObject(inforObj);
-                        _context.IntegrationLog.Add(log);
-                        _context.SaveChanges();
+                        //    log.RefNumber = transaction.transactionId + "";
+                        //}
+                        //log.NumOfLineSubmited = listTransaction.Count;
+                        //log.TransactionType = "MHS850MI - AddDOReceipt";
+                        //log.Json = JsonConvert.SerializeObject(inforObj);
+                        //_context.IntegrationLog.Add(log);
+                        //_context.SaveChanges();
                     }
 
                     else

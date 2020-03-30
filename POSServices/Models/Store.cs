@@ -31,8 +31,8 @@ namespace POSServices.Models
         public decimal? TargetValue { get; set; }
         public DateTime? DateOpen { get; set; }
         public int? MobileStore { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
 
-        public virtual StoreType StoreType { get; set; }
         public virtual MutasiApproverMatrix MutasiApproverMatrix { get; set; }
         public virtual ICollection<DiscountSetupStore> DiscountSetupStore { get; set; }
         public virtual ICollection<DiscountStore> DiscountStore { get; set; }

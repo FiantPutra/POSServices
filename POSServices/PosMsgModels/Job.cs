@@ -13,6 +13,7 @@ namespace POSServices.PosMsgModels
         public string TableName { get; set; }
         public DateTime LastSynch { get; set; }
         public string Statusjob { get; set; }
+        public int? Erpjob { get; set; }
     }
 
     public class JobList

@@ -17,6 +17,7 @@ namespace POSServices.Models
         public string PhoneNumber { get; set; }
         public int? StoreId { get; set; }
         public string DefaultCurr { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
 
         public virtual CustomerGroup CustGroup { get; set; }
     }

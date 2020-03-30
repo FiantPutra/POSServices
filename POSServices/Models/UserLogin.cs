@@ -15,6 +15,7 @@ namespace POSServices.Models
         public string NewPassword { get; set; }
         public string OldPassword { get; set; }
         public string ConfirmPassword { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
 
         public virtual Employee User { get; set; }
     }

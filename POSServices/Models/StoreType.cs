@@ -5,11 +5,6 @@ namespace POSServices.Models
 {
     public partial class StoreType
     {
-        public StoreType()
-        {
-            Store = new HashSet<Store>();
-        }
-
         public int Id { get; set; }
         public string TypeId { get; set; }
         public string Name { get; set; }
@@ -18,7 +13,5 @@ namespace POSServices.Models
         public string InforOrderTypeRetur { get; set; }
         public string InforXrcdnormal { get; set; }
         public string InforXrcdretur { get; set; }
-
-        public virtual ICollection<Store> Store { get; set; }
     }
 }

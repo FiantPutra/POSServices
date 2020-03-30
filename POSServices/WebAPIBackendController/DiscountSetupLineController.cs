@@ -22,14 +22,13 @@ namespace POSServices.WebAPIBackendController
         }
 
         [HttpGet]
-        public async Task<IActionResult> getDiscountSetupLine()
+        public async Task<IActionResult> getDiscountSetupLine(int discountSetupId)
         {
             try
             {
-                var discountSetupLine = (from dsl in _context.DiscountSetupLines
+                var discountSetupLine = (from dsl in _context.DiscountSetupLines.Where(x => x.DiscountSetupId == discountSetupId)
                                          select new
-                                         {
-                                             DiscountCode = dsl.DiscountCode,
+                                         {                                             
                                              GroupCode = dsl.GroupCode,
                                              Code = dsl.Code,
                                              DiscountPercent = dsl.DiscountPrecentage,
@@ -37,8 +36,7 @@ namespace POSServices.WebAPIBackendController
                                              QtyMin = dsl.QtyMin,
                                              QtyMax = dsl.QtyMax,
                                              AmountMin = dsl.AmountMin,
-                                             AmountMax = dsl.AmountMax,
-                                             ArticleIdDisc = dsl.ArticleIdDiscount,
+                                             AmountMax = dsl.AmountMax,                                             
                                              Multi = dsl.Multi
                                          }).ToList();
 
@@ -54,7 +52,7 @@ namespace POSServices.WebAPIBackendController
             }
         }
 
-        [HttpPost("Add")]
+        [HttpPost("Create")]
         public async Task<IActionResult> create(discountSetupLineList discSetupLnList)
         {
             try
@@ -63,10 +61,9 @@ namespace POSServices.WebAPIBackendController
 
                 for (int i = 0; i < list.Count; i++)
                 {
-                    var discSetup = _context.DiscountSetup.Where(x => x.DiscountCode == list[i].DiscountCode).First();
+                    var discSetup = _context.DiscountSetup.Where(x => x.DiscountCode == list[i].DiscountSetup.DiscountCode).First();
 
-                    DiscountSetupLines discSetupLines = new DiscountSetupLines();
-                    discSetupLines.DiscountCode = list[i].DiscountCode;
+                    DiscountSetupLines discSetupLines = new DiscountSetupLines();                    
                     discSetupLines.GroupCode = list[i].GroupCode;
                     discSetupLines.Code = list[i].Code;
                     discSetupLines.DiscountPrecentage = list[i].DiscountPrecentage;
@@ -74,11 +71,11 @@ namespace POSServices.WebAPIBackendController
                     discSetupLines.QtyMin = list[i].QtyMin;
                     discSetupLines.QtyMax = list[i].QtyMax;
                     discSetupLines.AmountMin = list[i].AmountMin;
-                    discSetupLines.AmountMax = list[i].AmountMax;
-                    discSetupLines.ArticleIdDiscount = list[i].ArticleIdDiscount;
+                    discSetupLines.AmountMax = list[i].AmountMax;                 
                     discSetupLines.Multi = list[i].Multi;
+                    discSetupLines.StartDate = discSetup.StartDate;
+                    discSetupLines.EndDate = discSetup.EndDate;
                     discSetupLines.DiscountSetupId = discSetup.Id;
-                    discSetupLines.CreatedDate = DateTime.Now;
                     _context.Add(discSetupLines);
                     _context.SaveChanges();
                 }
@@ -101,7 +98,7 @@ namespace POSServices.WebAPIBackendController
             }
         }
 
-        [HttpPost("Edit")]
+        [HttpPost("Update")]
         public async Task<IActionResult> update(discountSetupLineList discSetupLnList)
         {
             try
@@ -110,12 +107,13 @@ namespace POSServices.WebAPIBackendController
 
                 for (int i = 0; i < list.Count; i++)
                 {
+                    //var discSetup = _context.DiscountSetup.Where(x => x.DiscountCode == list[i].DiscountSetup.DiscountCode).First();
+
                     bool discExist = false;
-                    discExist = _context.DiscountSetupLines.Any(c => c.DiscountCode == list[i].DiscountCode && c.Code == list[i].Code);
+                    discExist = _context.DiscountSetupLines.Any(c => c.Id == list[i].Id);
                     if (discExist == true)
                     {
-                        var discSetupLnObj = _context.DiscountSetupLines.Where(x => x.DiscountCode == list[i].DiscountCode && x.Code == list[i].Code).First();
-                        discSetupLnObj.DiscountCode = list[i].DiscountCode;
+                        var discSetupLnObj = _context.DiscountSetupLines.Where(x => x.Id == list[i].Id).First();                        
                         discSetupLnObj.GroupCode = list[i].GroupCode;
                         discSetupLnObj.Code = list[i].Code;
                         discSetupLnObj.DiscountCash = list[i].DiscountCash;
@@ -123,10 +121,10 @@ namespace POSServices.WebAPIBackendController
                         discSetupLnObj.AmountMin = list[i].AmountMin;
                         discSetupLnObj.AmountMax = list[i].AmountMax;
                         discSetupLnObj.QtyMin = list[i].QtyMin;
-                        discSetupLnObj.QtyMax = list[i].QtyMax;
-                        discSetupLnObj.ArticleIdDiscount = list[i].ArticleIdDiscount;
-                        discSetupLnObj.Multi = list[i].Multi;                        
-                        discSetupLnObj.CreatedDate = discSetupLnObj.CreatedDate;
+                        discSetupLnObj.QtyMax = list[i].QtyMax;                        
+                        discSetupLnObj.Multi = list[i].Multi;
+                        discSetupLnObj.StartDate = list[i].StartDate;
+                        discSetupLnObj.EndDate = list[i].EndDate;
 
                         _context.DiscountSetupLines.Update(discSetupLnObj);
                         _context.SaveChanges();
@@ -169,7 +167,9 @@ namespace POSServices.WebAPIBackendController
 
                 for (int i = 0; i < list.Count; i++)
                 {
-                    var discSetupLnObj = _context.DiscountSetupLines.Where(x => x.DiscountCode == list[i].DiscountCode && x.Code == list[i].Code).First();
+                    var discSetup = _context.DiscountSetup.Where(x => x.DiscountCode == list[i].DiscountSetup.DiscountCode).First();
+
+                    var discSetupLnObj = _context.DiscountSetupLines.Where(x => x.DiscountSetupId == discSetup.Id && x.Code == list[i].Code).First();
                     _context.DiscountSetupLines.Remove(discSetupLnObj);
                     _context.SaveChanges();
                 }

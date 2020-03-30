@@ -22,17 +22,19 @@ namespace POSServices.WebAPIBackendController
         }
 
         [HttpGet]
-        public async Task<IActionResult> getUploadSession()
+        public async Task<IActionResult> getUploadSession(int JobId)
         {
             try
             {
-                var uploadSession = (from us in _context.JobTabletoSynchDetailUpload
+                var uploadSession = (from us in _context.JobTabletoSynchDetailUpload.Where(x => x.JobId == JobId)
                                        select new
                                        {
+                                           SyncDetail = us.SynchDetail,
                                            Store = us.StoreId,
                                            TableName = us.TableName,
                                            SyncDate = us.Synchdate,
-                                           rowFatch = us.RowFatch
+                                           rowFatch = us.RowFatch,
+                                           JobId = us.JobId
                                        }).ToList();
 
                 return Json(new[] { uploadSession });
@@ -48,15 +50,17 @@ namespace POSServices.WebAPIBackendController
         }
 
         [HttpGet("Status")]
-        public async Task<IActionResult> getUploadSessionStatus()
+        public async Task<IActionResult> getUploadSessionStatus(int JobId)
         {
             try
             {
                 var uploadSessionStatus = (from us in _context.JobTabletoSynchDetailUpload
                                              join ust in _context.JobSynchDetailUploadStatus
                                              on us.SynchDetail equals ust.SynchDetail
+                                             where us.JobId == JobId
                                              select new
                                              {
+                                                 SyncDetail = us.SynchDetail,
                                                  Store = us.StoreId,
                                                  TableName = us.TableName,
                                                  SyncDate = us.Synchdate,

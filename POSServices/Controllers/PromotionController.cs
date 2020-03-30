@@ -180,14 +180,8 @@ namespace POSServices.Controllers
                         promotionIdFk = discountRetailIdList,
                         articleId = item.ItemId,
                         articleIdAlias = item.ItemIdAlias,
-                        articleName = item.Name,
-                        brand = item.Brand,
-                        color = item.Color,
-                        department = item.Department,
-                        departmentType = item.DepartmentType,
-                        gender = item.Gender,
-                        price = 0,
-                        size = item.Size,
+                        articleName = item.Name,                        
+                        price = 0,                        
                         unit = "PCS"
 
                     };

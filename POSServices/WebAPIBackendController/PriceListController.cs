@@ -47,7 +47,7 @@ namespace POSServices.WebAPIBackendController
             }
         }
 
-        [HttpPost("Add")]
+        [HttpPost("Create")]
         public async Task<IActionResult> create(ListPrice listPrice)
         {
             try
@@ -96,7 +96,7 @@ namespace POSServices.WebAPIBackendController
             }
         }
 
-        [HttpPost("Edit")]
+        [HttpPost("Update")]
         public async Task<IActionResult> update(ListPrice listPrice)
         {
             try

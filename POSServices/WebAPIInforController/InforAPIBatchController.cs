@@ -41,7 +41,7 @@ namespace POSServices.WebAPIInforController
                 List<Store> storesList = _context.Store.ToList();
                 List<Customer> customerList = _context.Customer.ToList();
                 List<StoreType> storeTypesList = _context.StoreType.ToList();
-                List<TransactionByPass> transactionByPasses = _context.TransactionByPass.ToList();
+                List<TransactionByPassx> transactionByPasses = _context.TransactionByPassx.ToList();
 
 
                 for (int xa = Int32.Parse(datestart); xa <= Int32.Parse(dateend); xa++)
@@ -597,17 +597,17 @@ namespace POSServices.WebAPIInforController
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforObjPostReturn resultData = serializer.ReadObject(stream) as InforObjPostReturn;
                         //  status = "Return : " + resultData.results[0].errorMessage + "Sukses "+ resultData.nrOfSuccessfullTransactions;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = transaction.transactionId;
-                        log.ErrorMessage = resultData.results[0].errorMessage;
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        log.NumOfLineSubmited = listTransaction.Count;
-                        log.RefNumber = id + 100 + "";
-                        log.Json = JsonConvert.SerializeObject(inforObj);
-                        log.TransactionType = "OPS270MI Batch";
-                        _context.IntegrationLog.Add(log);
-                        _context.SaveChanges();
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = transaction.transactionId;
+                        //log.ErrorMessage = resultData.results[0].errorMessage;
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //log.NumOfLineSubmited = listTransaction.Count;
+                        //log.RefNumber = id + 100 + "";
+                        //log.Json = JsonConvert.SerializeObject(inforObj);
+                        //log.TransactionType = "OPS270MI Batch";
+                        //_context.IntegrationLog.Add(log);
+                        //_context.SaveChanges();
                     }
 
                     //add sales ticket pay
@@ -653,16 +653,16 @@ namespace POSServices.WebAPIInforController
                         }
                         catch (Exception ex)
                         {
-                            IntegrationLog log = new IntegrationLog();
-                            log.Description = "getRoundNumber";
-                            log.ErrorMessage = ex.ToString();
-                            log.NrOfFailedTransactions = 0;
-                            log.NrOfSuccessfullTransactions = 0;
-                            log.NumOfLineSubmited = 0;
-                            log.RefNumber = "No Ref";
-                            log.TransactionType = "Round Number";
-                            _context.IntegrationLog.Add(log);
-                            _context.SaveChanges();
+                            //IntegrationLog log = new IntegrationLog();
+                            //log.Description = "getRoundNumber";
+                            //log.ErrorMessage = ex.ToString();
+                            //log.NrOfFailedTransactions = 0;
+                            //log.NrOfSuccessfullTransactions = 0;
+                            //log.NumOfLineSubmited = 0;
+                            //log.RefNumber = "No Ref";
+                            //log.TransactionType = "Round Number";
+                            //_context.IntegrationLog.Add(log);
+                            //_context.SaveChanges();
                         }
                     }
                     else
@@ -743,20 +743,20 @@ namespace POSServices.WebAPIInforController
                         try
                         {
 
-                            IntegrationLog log = new IntegrationLog();
-                            log.Description = "AddBatchHeader - " + transactionAPI.transactionId;
-                            log.ErrorMessage = resultData.results[0].errorMessage;
-                            log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                            log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                            log.NumOfLineSubmited = 0;
-                            if (resultData.nrOfSuccessfullTransactions > 0)
-                            {
-                                log.RefNumber = resultData.results[0].records[0].ORNO;
-                                this.AddBatchLine(transactionAPI, id, log.RefNumber, 0, 0, getdate.Value).Wait();
-                            }
-                            log.TransactionType = "OIS100MI";
-                            log.Json = JsonConvert.SerializeObject(inforObj);
-                            _context.IntegrationLog.Add(log);
+                            //IntegrationLog log = new IntegrationLog();
+                            //log.Description = "AddBatchHeader - " + transactionAPI.transactionId;
+                            //log.ErrorMessage = resultData.results[0].errorMessage;
+                            //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                            //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                            //log.NumOfLineSubmited = 0;
+                            //if (resultData.nrOfSuccessfullTransactions > 0)
+                            //{
+                            //    log.RefNumber = resultData.results[0].records[0].ORNO;
+                            //    this.AddBatchLine(transactionAPI, id, log.RefNumber, 0, 0, getdate.Value).Wait();
+                            //}
+                            //log.TransactionType = "OIS100MI";
+                            //log.Json = JsonConvert.SerializeObject(inforObj);
+                            //_context.IntegrationLog.Add(log);
 
 
                             Models.Transaction trans1 = new Models.Transaction();
@@ -770,18 +770,18 @@ namespace POSServices.WebAPIInforController
                         }
                         catch (Exception ex)
                         {
-                            IntegrationLog log = new IntegrationLog();
-                            log.Description = "AddBatchHeader";
-                            log.ErrorMessage = "Error While Getting ORNO - " + ex.ToString();
-                            log.NrOfFailedTransactions = 0;
-                            log.NrOfSuccessfullTransactions = 0;
-                            log.NumOfLineSubmited = 0;
-                            log.RefNumber = "No Ref";
-                            log.TransactionType = "OIS100MI";
-                            log.Json = JsonConvert.SerializeObject(inforObj);
-                            _context.IntegrationLog.Add(log);
+                            //IntegrationLog log = new IntegrationLog();
+                            //log.Description = "AddBatchHeader";
+                            //log.ErrorMessage = "Error While Getting ORNO - " + ex.ToString();
+                            //log.NrOfFailedTransactions = 0;
+                            //log.NrOfSuccessfullTransactions = 0;
+                            //log.NumOfLineSubmited = 0;
+                            //log.RefNumber = "No Ref";
+                            //log.TransactionType = "OIS100MI";
+                            //log.Json = JsonConvert.SerializeObject(inforObj);
+                            //_context.IntegrationLog.Add(log);
 
-                            _context.SaveChanges();
+                            //_context.SaveChanges();
                         }
                     }
                 }
@@ -914,19 +914,19 @@ namespace POSServices.WebAPIInforController
                         //byte[] byteArray = Encoding.ASCII.GetBytes(contents);
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforTransactionInStoreResult resultData = serializer.ReadObject(stream) as InforTransactionInStoreResult;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = "AddBatchLine";
-                        if (resultData.nrOfFailedTransactions > 0)
-                        {
-                            log.ErrorMessage = resultData.results[0].errorMessage;
-                        }
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        log.NumOfLineSubmited = (transactionAPI.transactionLines.Count + 1);
-                        log.RefNumber = orno;
-                        log.TransactionType = "OIS100MI";
-                        log.Json = JsonConvert.SerializeObject(trans);
-                        _context.IntegrationLog.Add(log);
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = "AddBatchLine";
+                        //if (resultData.nrOfFailedTransactions > 0)
+                        //{
+                        //    log.ErrorMessage = resultData.results[0].errorMessage;
+                        //}
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //log.NumOfLineSubmited = (transactionAPI.transactionLines.Count + 1);
+                        //log.RefNumber = orno;
+                        //log.TransactionType = "OIS100MI";
+                        //log.Json = JsonConvert.SerializeObject(trans);
+                        //_context.IntegrationLog.Add(log);
 
                     }
                 }
@@ -994,20 +994,20 @@ namespace POSServices.WebAPIInforController
                         try
                         {
 
-                            IntegrationLog log = new IntegrationLog();
-                            log.Description = "AddBatchHeader - " + transactionAPI.transactionId;
-                            log.ErrorMessage = resultData.results[0].errorMessage;
-                            log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                            log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                            log.NumOfLineSubmited = 0;
-                            if (resultData.nrOfSuccessfullTransactions > 0)
-                            {
-                                log.RefNumber = resultData.results[0].records[0].ORNO;
-                                this.AddBatchLineEmployee(transactionAPI, id, log.RefNumber, 0, 0, getdate.Value).Wait();
-                            }
-                            log.TransactionType = "OIS100MI";
-                            log.Json = JsonConvert.SerializeObject(inforObj);
-                            _context.IntegrationLog.Add(log);
+                            //IntegrationLog log = new IntegrationLog();
+                            //log.Description = "AddBatchHeader - " + transactionAPI.transactionId;
+                            //log.ErrorMessage = resultData.results[0].errorMessage;
+                            //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                            //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                            //log.NumOfLineSubmited = 0;
+                            //if (resultData.nrOfSuccessfullTransactions > 0)
+                            //{
+                            //    log.RefNumber = resultData.results[0].records[0].ORNO;
+                            //    this.AddBatchLineEmployee(transactionAPI, id, log.RefNumber, 0, 0, getdate.Value).Wait();
+                            //}
+                            //log.TransactionType = "OIS100MI";
+                            //log.Json = JsonConvert.SerializeObject(inforObj);
+                            //_context.IntegrationLog.Add(log);
 
 
                             Models.Transaction trans1 = new Models.Transaction();
@@ -1021,18 +1021,18 @@ namespace POSServices.WebAPIInforController
                         }
                         catch (Exception ex)
                         {
-                            IntegrationLog log = new IntegrationLog();
-                            log.Description = "AddBatchHeader Employee";
-                            log.ErrorMessage = "Error While Getting ORNO - " + ex.ToString();
-                            log.NrOfFailedTransactions = 0;
-                            log.NrOfSuccessfullTransactions = 0;
-                            log.NumOfLineSubmited = 0;
-                            log.RefNumber = "No Ref";
-                            log.TransactionType = "OIS100MI";
-                            log.Json = JsonConvert.SerializeObject(inforObj);
-                            _context.IntegrationLog.Add(log);
+                            //IntegrationLog log = new IntegrationLog();
+                            //log.Description = "AddBatchHeader Employee";
+                            //log.ErrorMessage = "Error While Getting ORNO - " + ex.ToString();
+                            //log.NrOfFailedTransactions = 0;
+                            //log.NrOfSuccessfullTransactions = 0;
+                            //log.NumOfLineSubmited = 0;
+                            //log.RefNumber = "No Ref";
+                            //log.TransactionType = "OIS100MI";
+                            //log.Json = JsonConvert.SerializeObject(inforObj);
+                            //_context.IntegrationLog.Add(log);
 
-                            _context.SaveChanges();
+                            //_context.SaveChanges();
                         }
                     }
                 }
@@ -1190,19 +1190,19 @@ namespace POSServices.WebAPIInforController
                         //byte[] byteArray = Encoding.ASCII.GetBytes(contents);
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforTransactionInStoreResult resultData = serializer.ReadObject(stream) as InforTransactionInStoreResult;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = "AddBatchLine";
-                        if (resultData.nrOfFailedTransactions > 0)
-                        {
-                            log.ErrorMessage = resultData.results[0].errorMessage;
-                        }
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        log.NumOfLineSubmited = (transactionAPI.transactionLines.Count + 1);
-                        log.RefNumber = orno;
-                        log.TransactionType = "OIS100MI";
-                        log.Json = JsonConvert.SerializeObject(trans);
-                        _context.IntegrationLog.Add(log);
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = "AddBatchLine";
+                        //if (resultData.nrOfFailedTransactions > 0)
+                        //{
+                        //    log.ErrorMessage = resultData.results[0].errorMessage;
+                        //}
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //log.NumOfLineSubmited = (transactionAPI.transactionLines.Count + 1);
+                        //log.RefNumber = orno;
+                        //log.TransactionType = "OIS100MI";
+                        //log.Json = JsonConvert.SerializeObject(trans);
+                        //_context.IntegrationLog.Add(log);
 
                     }
                 }

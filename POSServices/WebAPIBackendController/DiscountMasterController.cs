@@ -44,8 +44,7 @@ namespace POSServices.WebAPIBackendController
                                       AmountMin = ds.AmountMin,
                                       AmountMax = ds.AmountMax,
                                       ApprovedDate = ds.ApprovedDate,
-                                      Multi = ds.Multi,
-                                      TableCode = ds.TableCode,
+                                      Multi = ds.Multi,                                      
                                       GroupCode = dsl.GroupCode,
                                       Code = dsl.Code,
                                       DiscountPercentLine = dsl.DiscountPrecentage,
@@ -53,8 +52,7 @@ namespace POSServices.WebAPIBackendController
                                       QtyMinLine = dsl.QtyMin,
                                       QtyMaxLine = dsl.QtyMax,
                                       AmountMinLine = dsl.AmountMin,
-                                      AmountMaxLine = dsl.AmountMax,
-                                      ArticleIdDisc = dsl.ArticleIdDiscount,
+                                      AmountMaxLine = dsl.AmountMax,                                      
                                       MultiLine = dsl.Multi
                                   }).ToList();
 

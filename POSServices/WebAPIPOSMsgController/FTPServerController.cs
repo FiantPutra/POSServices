@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static POSServices.Models.HO_MsgModel;
+using POSServices.PosMsgModels;
 
 namespace POSServices.WebAPIPOSMsgController
 {
@@ -28,7 +28,7 @@ namespace POSServices.WebAPIPOSMsgController
                 try
                 {
 
-                    string queryString = "SELECT * FROM FTPServerTable";                    
+                    string queryString = "SELECT * FROM IntegrationParameter";                    
 
                     using (SqlCommand command = new SqlCommand(queryString, connection))
                     {
@@ -43,9 +43,9 @@ namespace POSServices.WebAPIPOSMsgController
                             while (reader.Read())
                             {
                                 ftpServer temp = new ftpServer();
-                                temp.serverName = Convert.ToString(reader["ServerName"]);
-                                temp.userName = Convert.ToString(reader["Username"]);
-                                temp.password = Convert.ToString(reader["Password"]);
+                                temp.serverName = Convert.ToString(reader["ftpServerName"]);
+                                temp.userName = Convert.ToString(reader["ftpUsername"]);
+                                temp.password = Convert.ToString(reader["ftpPassword"]);
 
                                 ftpServersList.Add(temp);
                             }

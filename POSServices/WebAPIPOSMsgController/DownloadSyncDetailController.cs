@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static POSServices.Models.HO_MsgModel;
+using POSServices.PosMsgModels;
 
 namespace POSServices.WebAPIPOSMsgController
 {
@@ -57,6 +57,7 @@ namespace POSServices.WebAPIPOSMsgController
                                 temp.createTable = Convert.ToString(reader["CreateTable"]);
                                 temp.RowFatch = Convert.ToString(reader["RowFatch"]);
                                 temp.syncType = Convert.ToInt32(reader["SyncType"]);
+                                temp.tablePrimaryKey = Convert.ToString(reader["TablePrimaryKey"]);
 
                                 syncDownloadDet.Add(temp);
                             }

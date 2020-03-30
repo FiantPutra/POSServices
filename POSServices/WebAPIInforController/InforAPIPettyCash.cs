@@ -95,17 +95,17 @@ namespace POSServices.WebAPIInforController
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforObjPostReturn resultData = serializer.ReadObject(stream) as InforObjPostReturn;
                         //  status = "Return : " + resultData.results[0].errorMessage + "Sukses "+ resultData.nrOfSuccessfullTransactions;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = transaction.pettyCashId;
-                        log.ErrorMessage = resultData.results[0].errorMessage;
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        log.NumOfLineSubmited = listTransaction.Count;
-                        log.RefNumber = transaction.pettyCashId + "";
-                        log.Json = JsonConvert.SerializeObject(inforObjTrans);
-                        log.TransactionType = "OPS270MI-PettyCashTcktLine";
-                        _context.IntegrationLog.Add(log);
-                        _context.SaveChanges();
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = transaction.pettyCashId;
+                        //log.ErrorMessage = resultData.results[0].errorMessage;
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //log.NumOfLineSubmited = listTransaction.Count;
+                        //log.RefNumber = transaction.pettyCashId + "";
+                        //log.Json = JsonConvert.SerializeObject(inforObjTrans);
+                        //log.TransactionType = "OPS270MI-PettyCashTcktLine";
+                        //_context.IntegrationLog.Add(log);
+                        //_context.SaveChanges();
                     }
                     else
                     {
@@ -153,17 +153,17 @@ namespace POSServices.WebAPIInforController
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforObjPostReturn resultData = serializer.ReadObject(stream) as InforObjPostReturn;
                         //  status = "Return : " + resultData.results[0].errorMessage + "Sukses "+ resultData.nrOfSuccessfullTransactions;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = transaction.pettyCashId;
-                        log.ErrorMessage = resultData.results[0].errorMessage;
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        log.NumOfLineSubmited = listTransaction.Count;
-                        log.RefNumber = transaction.pettyCashId + "";
-                        log.Json = JsonConvert.SerializeObject(inforObjPay);
-                        log.TransactionType = "OPS270MI-PettyCashTkcPay";
-                        _context.IntegrationLog.Add(log);
-                        _context.SaveChanges();
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = transaction.pettyCashId;
+                        //log.ErrorMessage = resultData.results[0].errorMessage;
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //log.NumOfLineSubmited = listTransaction.Count;
+                        //log.RefNumber = transaction.pettyCashId + "";
+                        //log.Json = JsonConvert.SerializeObject(inforObjPay);
+                        //log.TransactionType = "OPS270MI-PettyCashTkcPay";
+                        //_context.IntegrationLog.Add(log);
+                        //_context.SaveChanges();
                     }
                     //end for pay
 
@@ -195,17 +195,17 @@ namespace POSServices.WebAPIInforController
                         MemoryStream stream = new MemoryStream(byteArray);
                         InforObjPostReturn resultData = serializer.ReadObject(stream) as InforObjPostReturn;
                         //  status = "Return : " + resultData.results[0].errorMessage + "Sukses "+ resultData.nrOfSuccessfullTransactions;
-                        IntegrationLog log = new IntegrationLog();
-                        log.Description = transaction.pettyCashId;
-                        log.ErrorMessage = resultData.results[0].errorMessage;
-                        log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
-                        log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
-                        log.NumOfLineSubmited = listTransaction.Count;
-                        log.RefNumber = transaction.pettyCashId + "";
-                        log.Json = JsonConvert.SerializeObject(inforObjBatch);
-                        log.TransactionType = "OPS270MI-PettyCashBatch";
-                        _context.IntegrationLog.Add(log);
-                        _context.SaveChanges();
+                        //IntegrationLog log = new IntegrationLog();
+                        //log.Description = transaction.pettyCashId;
+                        //log.ErrorMessage = resultData.results[0].errorMessage;
+                        //log.NrOfFailedTransactions = resultData.nrOfFailedTransactions;
+                        //log.NrOfSuccessfullTransactions = resultData.nrOfSuccessfullTransactions;
+                        //log.NumOfLineSubmited = listTransaction.Count;
+                        //log.RefNumber = transaction.pettyCashId + "";
+                        //log.Json = JsonConvert.SerializeObject(inforObjBatch);
+                        //log.TransactionType = "OPS270MI-PettyCashBatch";
+                        //_context.IntegrationLog.Add(log);
+                        //_context.SaveChanges();
                     }
 
                 }
@@ -244,16 +244,16 @@ namespace POSServices.WebAPIInforController
                         }
                         catch (Exception ex)
                         {
-                            IntegrationLog log = new IntegrationLog();
-                            log.Description = "getRoundNumber";
-                            log.ErrorMessage = ex.ToString();
-                            log.NrOfFailedTransactions = 0;
-                            log.NrOfSuccessfullTransactions = 0;
-                            log.NumOfLineSubmited = 0;
-                            log.RefNumber = "No Ref";
-                            log.TransactionType = "Round Number Petty Cash";
-                            _context.IntegrationLog.Add(log);
-                            _context.SaveChanges();
+                            //IntegrationLog log = new IntegrationLog();
+                            //log.Description = "getRoundNumber";
+                            //log.ErrorMessage = ex.ToString();
+                            //log.NrOfFailedTransactions = 0;
+                            //log.NrOfSuccessfullTransactions = 0;
+                            //log.NumOfLineSubmited = 0;
+                            //log.RefNumber = "No Ref";
+                            //log.TransactionType = "Round Number Petty Cash";
+                            //_context.IntegrationLog.Add(log);
+                            //_context.SaveChanges();
                         }
                     }
                     else

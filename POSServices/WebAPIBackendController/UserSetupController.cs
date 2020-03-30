@@ -23,7 +23,7 @@ namespace POSServices.WebAPIBackendController
             _repo = repo;
         }
 
-        [HttpPost("Add")]
+        [HttpPost("Create")]
         public async Task<IActionResult> create(userLoginList userLoginList)
         {
             try
@@ -79,7 +79,7 @@ namespace POSServices.WebAPIBackendController
             }
         }
 
-        [HttpPost("Edit")]
+        [HttpPost("Update")]
         public async Task<IActionResult> update(userLoginList userLoginList)
         {
             try
@@ -109,6 +109,7 @@ namespace POSServices.WebAPIBackendController
                         login.Role = list[i].Role;
                         login.Status = login.Status;
                         login.LastLogin = login.LastLogin;
+                        login.OldPassword = password;
                         _context.UserLogin.Update(login);
                         _context.SaveChanges();
                     }

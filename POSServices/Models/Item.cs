@@ -16,14 +16,13 @@ namespace POSServices.Models
         public int Id { get; set; }
         public string ItemId { get; set; }
         public string Name { get; set; }
-        public string Brand { get; set; }
-        public string Department { get; set; }
-        public string DepartmentType { get; set; }
-        public string Size { get; set; }
-        public string Color { get; set; }
-        public string Gender { get; set; }
+        public int? BrandId { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? DepartmentTypeId { get; set; }
+        public int? SizeId { get; set; }
+        public int? ColorId { get; set; }
+        public int? GenderId { get; set; }
         public string ItemGroup { get; set; }
-        public string ItemGroupDesc { get; set; }
         public string ItemIdAlias { get; set; }
         public bool? IsServiceItem { get; set; }
         public DateTime? CreateDateTime { get; set; }

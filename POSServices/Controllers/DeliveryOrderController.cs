@@ -136,7 +136,7 @@ namespace POSServices.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] DeliveryOrder transactionApi)
+        public async Task<IActionResult> Update(DeliveryOrder transactionApi)
         {
             //add for log
             try
@@ -206,8 +206,8 @@ namespace POSServices.Controllers
                     for (int i = 0; i < transactionApi.deliveryOrderLines.Count; i++)
                     {
 
-                        var artikelaidifk = _context.Item.Where(x => x.Id == transactionApi.deliveryOrderLines[i].articleIdFk).First().ItemIdAlias;
-                        var itemanme = _context.Item.Where(x => x.Id == transactionApi.deliveryOrderLines[i].articleIdFk).First().Name;
+                        //var artikelaidifk = _context.Item.Where(x => x.Id == transactionApi.deliveryOrderLines[i].articleIdFk).First().ItemIdAlias;
+                        //var itemanme = _context.Item.Where(x => x.Id == transactionApi.deliveryOrderLines[i].articleIdFk).First().Name;
                         //add  and remarkby frank 
                         // 7 april 2019
                         // untuk case yang double lines tidak ada packing number, referencenya beredsarkan id uniq di DO lins
@@ -219,7 +219,7 @@ namespace POSServices.Controllers
                         Models.InventoryTransactionLines transactionLines = _context.InventoryTransactionLines.Find(transactionApi.deliveryOrderLines[i].id);
                         //end of add end remark by frank
 
-                        transactionLines.ArticleName = itemanme;
+                        //transactionLines.ArticleName = itemanme;
                         //reamakr by frank 1 oktobr
                         // coa request
                         //   bool check = listar.Any(c => c.id == transactionApi.deliveryOrderLines[i].articleIdFk && c.articleIdAlias == transactionApi.deliveryOrderLines[i].packingNumber);
@@ -234,12 +234,12 @@ namespace POSServices.Controllers
                         //end of remark 1 oktoer
 
 
-                        Article dupli = new Article
-                        {
-                            id = transactionApi.deliveryOrderLines[i].articleIdFk,
-                            articleIdAlias = transactionApi.deliveryOrderLines[i].packingNumber
-                        };
-                        listar.Add(dupli);
+                        //Article dupli = new Article
+                        //{
+                        //    id = transactionApi.deliveryOrderLines[i].articleIdFk,
+                        //    articleIdAlias = transactionApi.deliveryOrderLines[i].packingNumber
+                        //};
+                        //listar.Add(dupli);
 
                         _context.InventoryTransactionLines.Update(transactionLines);
                         _context.SaveChanges();
@@ -247,25 +247,30 @@ namespace POSServices.Controllers
 
                     response.code = "1";
                     response.message = "Sucess Add Data";
-                    DateTime maret20 = DateTime.ParseExact("2019-02-28", "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                    if (transaction.TransactionDate >= maret20)
-                    {
-                        if (transaction.InforBypass == true)
-                        {
+
+                    //if (transaction.StatusId == RetailEnum.doStatusConfirmed)
+                    //{
+                    //    this.insertAndCalculateDO(transactionApi);
+                    //}
+                    //DateTime maret20 = DateTime.ParseExact("2019-02-28", "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    //if (transaction.TransactionDate >= maret20)
+                    //{
+                    //    if (transaction.InforBypass == true)
+                    //    {
 
 
-                        }
-                        else
-                        {
-                            //   WebAPIInforController.InforAPIController inforAPIController = new WebAPIInforController.InforAPIController(_context);
-                            //   inforAPIController.RecieveRequestOrder(transactionApi, transaction.Id).Wait();
-                        }
+                    //    }
+                    //    else
+                    //    {
+                    //        //   WebAPIInforController.InforAPIController inforAPIController = new WebAPIInforController.InforAPIController(_context);
+                    //        //   inforAPIController.RecieveRequestOrder(transactionApi, transaction.Id).Wait();
+                    //    }
 
-                        if (transaction.StatusId == RetailEnum.doStatusConfirmed)
-                        {
-                            this.insertAndCalculateDO(transactionApi);
-                        }
-                    }
+                    //    if (transaction.StatusId == RetailEnum.doStatusConfirmed)
+                    //    {
+                    //        this.insertAndCalculateDO(transactionApi);
+                    //    }
+                    //}
 
                 }
 

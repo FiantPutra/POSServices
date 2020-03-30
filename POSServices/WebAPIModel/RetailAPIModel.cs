@@ -1062,4 +1062,9 @@ namespace POSServices.WebAPIModel
         public int ItemId { get; set; }
         public int DiscountId { get; set; }
     }
+
+    public class DeliveryOrderList
+    {
+        public List<DeliveryOrder> deliveries { get; set; }
+    }
 }

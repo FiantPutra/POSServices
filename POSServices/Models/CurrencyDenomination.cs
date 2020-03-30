@@ -8,5 +8,6 @@ namespace POSServices.Models
         public int Id { get; set; }
         public int CurrencyId { get; set; }
         public decimal Nominal { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
     }
 }

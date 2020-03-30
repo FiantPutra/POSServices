@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using POSServices.Data;
 using POSServices.Models;
-using static POSServices.Models.HO_MsgModel;
 
 namespace POSServices.WebAPIBackendController
 {
@@ -23,33 +22,22 @@ namespace POSServices.WebAPIBackendController
         }
 
         [HttpGet]
-        public async Task<IActionResult> getDiscountSetup()
+        public async Task<IActionResult> getDiscountSetup(int discountType, int status)
         {
             try
             {
-                var discountSetup = (from ds in _context.DiscountSetup
-                                     select new
-                                     {
-                                         DiscountCode = ds.DiscountCode,
-                                         DiscountCategory = ds.DiscountCategory,
-                                         DiscountName = ds.DiscountName,
-                                         DiscountType = ds.DiscountType,
-                                         CustomerGroupId = ds.CustomerGroupId,
-                                         StartDate = ds.StartDate,
-                                         EndDate = ds.EndDate,
-                                         Status = ds.Status,
-                                         DiscountCash = ds.DiscountCash,
-                                         DiscountPercent = ds.DiscountPercent,
-                                         QtyMin = ds.QtyMin,
-                                         QtyMax = ds.QtyMax,
-                                         AmountMin = ds.AmountMin,
-                                         AmountMax = ds.AmountMax,
-                                         ApprovedDate = ds.ApprovedDate,
-                                         Multi = ds.Multi,
-                                         TableCode = ds.TableCode
-                                     }).ToList();
+                Object jsonObj = new object();
 
-                return Json(new[] { discountSetup });
+                if (status == 0)
+                {
+                    jsonObj = Json(new[] { getDiscountSetupInactive(discountType) });
+                }
+                else if (status == 1)
+                {
+                    jsonObj = Json(new[] { getDiscountSetupActive(discountType) });
+                }
+
+                return Json(new[] { jsonObj });
             }
             catch (Exception ex)
             {
@@ -58,10 +46,49 @@ namespace POSServices.WebAPIBackendController
                     status = "500",
                     message = ex.ToString()
                 });
-            }            
+            }
         }
 
-        [HttpPost("Add")]
+        [HttpGet("Id")]
+        public async Task<IActionResult> getDiscountSetupById(int Id)
+        {
+            try
+            {
+                var discountSetupById = (from ds in _context.DiscountSetup.Where(x => x.Id == Id)
+                                         select new
+                                         {
+                                             DiscountCode = ds.DiscountCode,
+                                             DiscountCategory = ds.DiscountCategory,
+                                             DiscountName = ds.DiscountName,
+                                             DiscountType = ds.DiscountType,
+                                             CustomerGroupId = ds.CustomerGroupId,
+                                             StartDate = ds.StartDate,
+                                             EndDate = ds.EndDate,
+                                             Status = ds.Status,
+                                             DiscountCash = ds.DiscountCash,
+                                             DiscountPercent = ds.DiscountPercent,
+                                             QtyMin = ds.QtyMin,
+                                             QtyMax = ds.QtyMax,
+                                             AmountMin = ds.AmountMin,
+                                             AmountMax = ds.AmountMax,
+                                             ApprovedDate = ds.ApprovedDate,
+                                             Multi = ds.Multi,
+                                             DiscountSetupId = ds.Id
+                                         }).ToList();
+
+                return Json(new[] { discountSetupById });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    status = "500",
+                    message = ex.ToString()
+                });
+            }
+        }
+
+        [HttpPost("Create")]
         public async Task<IActionResult> create(discountSetupList discSetupList)
         {
             try
@@ -83,8 +110,7 @@ namespace POSServices.WebAPIBackendController
                     discSetup.QtyMin = list[i].QtyMin;
                     discSetup.QtyMax = list[i].QtyMax;
                     discSetup.StartDate = list[i].StartDate;
-                    discSetup.EndDate = list[i].EndDate;
-                    discSetup.TableCode = list[i].TableCode;
+                    discSetup.EndDate = list[i].EndDate;                    
                     discSetup.Multi = list[i].Multi;
                     discSetup.ApprovedDate = list[i].ApprovedDate;
                     discSetup.Status = list[i].Status;
@@ -125,7 +151,7 @@ namespace POSServices.WebAPIBackendController
             }            
         }
 
-        [HttpPost("Edit")]
+        [HttpPost("Update")]
         public async Task<IActionResult> update(discountSetupList discSetupList)
         {
             try
@@ -135,10 +161,10 @@ namespace POSServices.WebAPIBackendController
                 for (int i = 0; i < list.Count; i++)
                 {
                     bool discExist = false;
-                    discExist = _context.DiscountSetup.Any(c => c.DiscountCode == list[i].DiscountCode);
+                    discExist = _context.DiscountSetup.Any(c => c.Id == list[i].Id);
                     if (discExist == true)
                     {
-                        var discSetupObj = _context.DiscountSetup.Where(x => x.DiscountCode == list[i].DiscountCode).First();
+                        var discSetupObj = _context.DiscountSetup.Where(x => x.Id == list[i].Id).First();
                         discSetupObj.DiscountCode = list[i].DiscountCode;
                         discSetupObj.DiscountName = list[i].DiscountName;
                         discSetupObj.DiscountCategory = list[i].DiscountCategory;
@@ -151,8 +177,7 @@ namespace POSServices.WebAPIBackendController
                         discSetupObj.QtyMin = list[i].QtyMin;
                         discSetupObj.QtyMax = list[i].QtyMax;
                         discSetupObj.StartDate = list[i].StartDate;
-                        discSetupObj.EndDate = list[i].EndDate;
-                        discSetupObj.TableCode = list[i].TableCode;
+                        discSetupObj.EndDate = list[i].EndDate;                        
                         discSetupObj.Status = list[i].Status;
                         discSetupObj.Multi = list[i].Multi;
                         discSetupObj.ApprovedDate = list[i].ApprovedDate;
@@ -221,5 +246,61 @@ namespace POSServices.WebAPIBackendController
                 });
             }            
         }
+
+        public Object getDiscountSetupInactive(int discountType)
+        {
+            var discountSetup = (from ds in _context.DiscountSetup.Where(x => x.DiscountType == discountType
+                                 && (x.StartDate > DateTime.Today && x.EndDate > DateTime.Today || x.StartDate < DateTime.Today && x.EndDate < DateTime.Today))
+                                 select new
+                                 {
+                                     DiscountCode = ds.DiscountCode,
+                                     DiscountCategory = ds.DiscountCategory,
+                                     DiscountName = ds.DiscountName,
+                                     DiscountType = ds.DiscountType,
+                                     CustomerGroupId = ds.CustomerGroupId,
+                                     StartDate = ds.StartDate,
+                                     EndDate = ds.EndDate,
+                                     Status = ds.Status,
+                                     DiscountCash = ds.DiscountCash,
+                                     DiscountPercent = ds.DiscountPercent,
+                                     QtyMin = ds.QtyMin,
+                                     QtyMax = ds.QtyMax,
+                                     AmountMin = ds.AmountMin,
+                                     AmountMax = ds.AmountMax,
+                                     ApprovedDate = ds.ApprovedDate,
+                                     Multi = ds.Multi,
+                                     DiscountSetupId = ds.Id
+                                 }).ToList();
+
+            return discountSetup;
+        }
+
+        public Object getDiscountSetupActive(int discountType)
+        {
+            var discountSetup = (from ds in _context.DiscountSetup.Where(x => x.DiscountType == discountType
+                                 && x.StartDate < DateTime.Today && x.EndDate > DateTime.Today)
+                                 select new
+                                 {
+                                     DiscountCode = ds.DiscountCode,
+                                     DiscountCategory = ds.DiscountCategory,
+                                     DiscountName = ds.DiscountName,
+                                     DiscountType = ds.DiscountType,
+                                     CustomerGroupId = ds.CustomerGroupId,
+                                     StartDate = ds.StartDate,
+                                     EndDate = ds.EndDate,
+                                     Status = ds.Status,
+                                     DiscountCash = ds.DiscountCash,
+                                     DiscountPercent = ds.DiscountPercent,
+                                     QtyMin = ds.QtyMin,
+                                     QtyMax = ds.QtyMax,
+                                     AmountMin = ds.AmountMin,
+                                     AmountMax = ds.AmountMax,
+                                     ApprovedDate = ds.ApprovedDate,
+                                     Multi = ds.Multi,
+                                     DiscountSetupId = ds.Id
+                                 }).ToList();
+
+            return discountSetup;
+        }        
     }
 }

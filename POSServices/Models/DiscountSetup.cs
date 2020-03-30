@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace POSServices.Models
 {
@@ -15,11 +14,8 @@ namespace POSServices.Models
         public int DiscountCategory { get; set; }
         public string DiscountName { get; set; }
         public int CustomerGroupId { get; set; }
-        public string DiscountPartner { get; set; }
         public int? DiscountType { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm }")]
         public DateTime? StartDate { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm }")]
         public DateTime? EndDate { get; set; }
         public bool? Status { get; set; }
         public decimal? DiscountCash { get; set; }
@@ -31,8 +27,9 @@ namespace POSServices.Models
         public DateTime? CreatedDate { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public long Id { get; set; }
-        public int? TableCode { get; set; }
         public int? Multi { get; set; }
+        public int? ApplytoAllstore { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
 
         public virtual ICollection<DiscountSetupLines> DiscountSetupLines { get; set; }
     }

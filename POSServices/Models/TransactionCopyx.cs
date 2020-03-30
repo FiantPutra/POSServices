@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace POSServices.Models
 {
-    public partial class TransactionCopy
+    public partial class TransactionCopyx
     {
         public long Id { get; set; }
         public int? StoreId { get; set; }

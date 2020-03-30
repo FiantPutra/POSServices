@@ -22,6 +22,7 @@ namespace POSServices.Models
         public string Regional { get; set; }
         public string Division { get; set; }
         public int? StoreId { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
 
         public virtual ICollection<InventoryLines> InventoryLines { get; set; }
     }

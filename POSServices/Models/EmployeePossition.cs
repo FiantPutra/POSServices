@@ -21,6 +21,7 @@ namespace POSServices.Models
         public bool? CanRequestInventory { get; set; }
         public bool? CanConfirmDo { get; set; }
         public bool? CanClosingStore { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
 
         public virtual ICollection<Employee> Employee { get; set; }
     }
